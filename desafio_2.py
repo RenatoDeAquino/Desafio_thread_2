@@ -15,35 +15,43 @@
 
 import random
 #inicio player 1[ninckname =  seu nome,valor = montante, = d1 e d2 = dados, tab = tabuleiro]
-def player1(self,nickname,valor,d1,d2,tab):
-    #declaração de variaveis
-    self.nickname = nickname
-    self.valor = valor
-    self.d1 = d1
-    self.d2 = d2
-    self.tab = []
-    game_end = False
-    livre = True
-    nickname = "Ash"
-    valor = 0
-    jogadas = 0
-    game_crash = 0
-    #criação do tabuleiro
-    for x in range (0,100):
-        self.tab.append("[ ]")
-    #o jogo em si
-    while game_end == True:
-        if game_crash < 101:
-            if livre == True:
-                d1 = random.randint(1,6)
-                d2 = random.randint(1,6)
-                if d1 == d2:
-                    print(""+nickname+" fui preso por tirar no d1:"+d1+" e no d2:"+d2+"\nstatus: Preso\n dinheiro:"+valor) 
-                            
-def player2(self,nickname,valor,d1,d2,tab):
-    pass
-def player3(self,nickname,valor,d1,d2,tab):
-    pass
+def jogo(nickname):
+    tab = []
+    pos = 0
+    acabou = False
+    preso = False
+    andando = True
+    ajuda = True
+    rodada = 0
+    for x in range(0,100):
+        tab.append("[]")
+    tab[0] = nickname
+    print(tab)
+    print(len(tab))
+    while acabou == False:
+        d1 = random.randint(1,6)
+        d2 = random.randint(1,6)
+        rodada += 1
+        if d1 == d2 and andando == True:
+            preso = True
+            andando = False
+            ajuda = True
+            print("man to preso")
+        elif d1 == d2 and preso == True and ajuda == False:
+            preso = False
+            print("a liberdade cantou")
+        elif d1 != d2 and preso == False:
+            tab[pos] = "[]"
+            pos = pos + (d1 + d2)
+            if pos >= len(tab):
+                acabou = True
+                tab[len(tab)-1] = nickname
+                print(tab)
+            else:
+                tab[pos] = nickname
+                print(tab)
+        ajuda = False
+        print(rodada)
 
- 
+#falta colocar em threads agora
 
