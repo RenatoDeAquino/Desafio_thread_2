@@ -12,10 +12,10 @@
 #quando terminar imprimir o nome do jogador, total de jogadas e o valor arrecadado
 #marcar o jogador mais rapido e o mais rico
 
-
+from threading import Thread
 import random
 #inicio player 1[ninckname =  seu nome,valor = montante, = d1 e d2 = dados, tab = tabuleiro]
-def jogo(nickname):
+def jogo(nickname,valor,turno):
     tab = []
     pos = 0
     acabou = False
@@ -23,6 +23,7 @@ def jogo(nickname):
     andando = True
     ajuda = True
     rodada = 0
+    valor = 0
     for x in range(0,100):
         tab.append("[]")
     tab[0] = nickname
@@ -43,6 +44,10 @@ def jogo(nickname):
         elif d1 != d2 and preso == False:
             tab[pos] = "[]"
             pos = pos + (d1 + d2)
+            if pos % 2 == 0:
+                montante = montante + 79.99
+            else:
+                montante = montante + 53.21
             if pos >= len(tab):
                 acabou = True
                 tab[len(tab)-1] = nickname
@@ -51,7 +56,29 @@ def jogo(nickname):
                 tab[pos] = nickname
                 print(tab)
         ajuda = False
-        print(rodada)
+    print("O jogador:" +nickname+" ganhou em :"+str(rodada)+" rodadas\nSeu montante é: "+str(montante))
+    return valor, rodada
 
-#falta colocar em threads agora
+persongem1 = Thread(target=jogo,args=["*Bot1*",0,0])
+persongem2 = Thread(target=jogo,args=["*bot2*",0,0])
+persongem3 = Thread(target=jogo,args=["*bot3*",0,0])
+persongem4 = Thread(target=jogo,args=["*bott4*",0,0])
+
+persongem1.start()
+persongem2.start()
+persongem3.start()
+persongem4.start()
+#implementação para checagem do mais rapido e do mais rico
+
+#if persongem1.rodada < persongem2.rodada < persongem3.rodada < persongem4.rodada:
+#    print("o persongame:"+persongem1.nickname+" foi mais rápido")
+#elif persongem2.rodada < persongem1.rodada < persongem3.rodada < persongem4.rodada:
+#    print("o persongame:"+persongem2.nickname+" foi mais rápido")
+#elif persongem3.rodada < persongem1.rodada < persongem2.rodada < persongem4.rodada:
+#    print("o persongame:"+persongem3.nickname+" foi mais rápido")
+#elif persongem4.rodada < persongem1.rodada < persongem3.rodada < persongem2.rodada:
+#    print("o persongame:"+persongem4.nickname+" foi mais rápido")
+#if persongem1.valor > persongem2.valor > persongem3.valor > persongem4.valor:
+#    print("o persongame:"+persongem1.nickname+" é o mais rico")
+
 
