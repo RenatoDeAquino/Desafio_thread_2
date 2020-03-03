@@ -15,7 +15,7 @@
 from threading import Thread
 import random
 #inicio player 1[ninckname =  seu nome,valor = montante, = d1 e d2 = dados, tab = tabuleiro]
-def jogo(nickname,valor,turno):
+def jogo(nickname):
     tab = []
     pos = 0
     acabou = False
@@ -32,53 +32,40 @@ def jogo(nickname,valor,turno):
     while acabou == False:
         d1 = random.randint(1,6)
         d2 = random.randint(1,6)
+        print("Eu "+nickname+"tirei no primeiro dado: "+str(d1)+"\nE no segundo dado: "+str(d2)+"\n")
         rodada += 1
         if d1 == d2 and andando == True:
             preso = True
             andando = False
             ajuda = True
-            print("man to preso")
+            
+            print("man to preso na casa:" +str(pos)+"\n")
+
         elif d1 == d2 and preso == True and ajuda == False:
             preso = False
-            print("a liberdade cantou")
+            print("O "+nickname+" pagou a propina pras pessoas certas e saiu da prisão\n")
+        elif(d1 != d2 and preso == True):
+            print("O "+nickname+" ta tentando sair mas estelionatario não sai tão rapido assim não\n")
         elif d1 != d2 and preso == False:
-            tab[pos] = "[]"
             pos = pos + (d1 + d2)
             if pos % 2 == 0:
-                montante = montante + 79.99
+                valor = valor + 79.99
             else:
-                montante = montante + 53.21
+                valor = valor + 53.21
             if pos >= len(tab):
                 acabou = True
-                tab[len(tab)-1] = nickname
-                print(tab)
+                print("tudo tem um fim e esse foi o fim do "+nickname+"\n")
             else:
-                tab[pos] = nickname
-                print(tab)
+                print("eu "+nickname+"estou na casa "+str(pos)+" com "+str(valor)+" reais\n")
         ajuda = False
-    print("O jogador:" +nickname+" ganhou em :"+str(rodada)+" rodadas\nSeu montante é: "+str(montante))
-    return valor, rodada
+    print("O jogador:" +nickname+" ganhou em :"+str(rodada)+" rodadas\nSeu montante é: "+str(valor)+"\n")
 
-persongem1 = Thread(target=jogo,args=["*Bot1*",0,0])
-persongem2 = Thread(target=jogo,args=["*bot2*",0,0])
-persongem3 = Thread(target=jogo,args=["*bot3*",0,0])
-persongem4 = Thread(target=jogo,args=["*bott4*",0,0])
+persongem1 = Thread(target=jogo,args=["*Bot1*"])
+persongem2 = Thread(target=jogo,args=["*bot2*"])
+persongem3 = Thread(target=jogo,args=["*bot3*"])
+persongem4 = Thread(target=jogo,args=["*bott4*"])
 
 persongem1.start()
 persongem2.start()
 persongem3.start()
 persongem4.start()
-#implementação para checagem do mais rapido e do mais rico
-
-#if persongem1.rodada < persongem2.rodada < persongem3.rodada < persongem4.rodada:
-#    print("o persongame:"+persongem1.nickname+" foi mais rápido")
-#elif persongem2.rodada < persongem1.rodada < persongem3.rodada < persongem4.rodada:
-#    print("o persongame:"+persongem2.nickname+" foi mais rápido")
-#elif persongem3.rodada < persongem1.rodada < persongem2.rodada < persongem4.rodada:
-#    print("o persongame:"+persongem3.nickname+" foi mais rápido")
-#elif persongem4.rodada < persongem1.rodada < persongem3.rodada < persongem2.rodada:
-#    print("o persongame:"+persongem4.nickname+" foi mais rápido")
-#if persongem1.valor > persongem2.valor > persongem3.valor > persongem4.valor:
-#    print("o persongame:"+persongem1.nickname+" é o mais rico")
-
-
